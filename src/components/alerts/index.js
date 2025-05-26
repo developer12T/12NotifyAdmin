@@ -1,0 +1,6 @@
+export { default as BaseAlert } from './BaseAlert.vue'
+export { default as InfoAlert } from './InfoAlert.vue'
+export { default as DangerAlert } from './DangerAlert.vue'
+export { default as SuccessAlert } from './SuccessAlert.vue'
+export { default as WarningAlert } from './WarningAlert.vue'
+export { default as DarkAlert } from './DarkAlert.vue' 
