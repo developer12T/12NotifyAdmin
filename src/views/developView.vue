@@ -297,11 +297,11 @@
                   <div class="flex items-center gap-2">
                     <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded">POST</span>
                     <code class="text-sm text-gray-600 dark:text-gray-300">{{ apiBaseUrl }}/api/messages/send</code>
-                  </div> 
-                  <!-- <div class="flex items-center gap-2">
-                    <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded">POST</span>
-                    <code class="text-sm text-gray-600 dark:text-gray-300">{{ apiBaseUrl }}/api/messages/upload</code>
-                  </div>  -->
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 rounded">GET</span>
+                    <code class="text-sm text-gray-600 dark:text-gray-300">{{ apiBaseUrl }}/api/users/bot/:employeeID</code>
+                  </div>
                 </div>
               </div>
 
@@ -313,94 +313,42 @@
                 <div v-if="activeApiTab === 'axios'" class="space-y-4">
                   <div>
                     <h5 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">ส่งข้อความ</h5>
-                    <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>const botData ={
-                        "message": [ "ทดสอบการส่งข้อความ" ],
-                      //   "message": [
-                      //     "2",
-                      //     "เรื่องที่ 1",
-                      //     "เรื่องที่ 2",
-                      //     "เรื่องที่ 3",
-                      //     "เรื่องที่ 4",
-                      //     "เรื่องที่ 5"
-                      //   ],
-                        "employeeId": "BOT_EMPLOYEE_ID"
-                      };
-
-                    const response = await axios.post('{{ apiBaseUrl }}/api/messages/send', botData, {
-                      headers: {
-                        'Content-Type': 'application/json'
-                      }
-                    });</code></pre>
-                  </div> 
-                  
-                  <!-- <div>
-                    <h5 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">ส่งรูปภาพ</h5>
                     <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>const botData = {
-                      name: "Bot Name",
-                      roomCount: 0,
-                      requestCount: 0,
-                      createdBy: "employeeID",
-                      room: ["roomId1", "roomId2"]
-                    };
+  "roomId": [{{ currentBot?.rooms?.map(room => `"${room.id}"`).join(', ') || '' }}], // Room IDs ที่เชื่อมต่อกับ bot นี้
+  "message": [ "ทดสอบการส่งข้อความ" ],
+  "employeeId": "{{ currentBot?.employeeID }}",
+  "isAdminNotification": true
+};
 
-                    const response = await axios.post('{{ apiBaseUrl }}/api/users/create-bot', botData, {
-                      headers: {
-                        'Content-Type': 'application/json'
-                      }
-                    });</code></pre>
-                  </div>  -->
+const response = await axios.post('{{ apiBaseUrl }}/api/messages/send', botData, {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});</code></pre>
+                  </div>
                 </div>
 
                 <!-- PHP Examples -->
                 <div v-if="activeApiTab === 'php'" class="space-y-4">
-             
                   <div>
                     <h5 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">ส่งข้อความ</h5>
                     <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>$botData = [
-                        'message' => [ "ทดสอบการส่งข้อความ" ],
-                        //   "message": [
-                      //     "2",
-                      //     "เรื่องที่ 1",
-                      //     "เรื่องที่ 2",
-                      //     "เรื่องที่ 3",
-                      //     "เรื่องที่ 4",
-                        //     "เรื่องที่ 5"
-                        //   ],
-                        'employeeId' => 'BOT_EMPLOYEE_ID'
-                    ];
+    'roomId' => [{{ currentBot?.rooms?.map(room => `"${room.id}"`).join(', ') || '' }}], // Room IDs ที่เชื่อมต่อกับ bot นี้
+    'message' => [ "ทดสอบการส่งข้อความ" ],
+    'employeeId' => '{{ currentBot?.employeeID }}',
+    'isAdminNotification' => true
+];
 
-                    $ch = curl_init('{{ apiBaseUrl }}/api/messages/send');
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($botData));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        'Content-Type: application/json'
-                    ]);
-                    $response = curl_exec($ch);
-                    curl_close($ch);</code></pre>
+$ch = curl_init('{{ apiBaseUrl }}/api/messages/send');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($botData));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json'
+]);
+$response = curl_exec($ch);
+curl_close($ch);</code></pre>
                   </div>
-
-                  <!-- <div>
-                    <h5 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">ส่งรูปภาพ</h5>
-                    <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>$botData = [
-                        'name' => 'Bot Name',
-                        'roomCount' => 0,
-                        'requestCount' => 0,
-                        'createdBy' => 'employeeID',
-                        'room' => ['roomId1', 'roomId2']
-                    ];
-
-                    $ch = curl_init('{{ apiBaseUrl }}/api/users/create-bot');
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($botData));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        'Content-Type: application/json'
-                    ]);
-                    $response = curl_exec($ch);
-                    curl_close($ch);</code></pre>
-                  </div> -->
-
                 </div>
               </div>
             </div>
@@ -743,9 +691,22 @@
         });
       },
 
-      openApiModal(bot) {
-        this.currentBot = bot;
-        this.showApiModal = true;
+      async openApiModal(bot) {
+        try {
+          this.loading = true;
+          // Fetch detailed bot information
+          const botData = await this.botStore.getBotDetails(bot.employeeID);
+          this.currentBot = {
+            ...bot,
+            rooms: botData.rooms || []
+          };
+          this.showApiModal = true;
+        } catch (error) {
+          console.error('Error fetching bot details:', error);
+          alert('เกิดข้อผิดพลาดในการดึงข้อมูล bot กรุณาลองใหม่อีกครั้ง');
+        } finally {
+          this.loading = false;
+        }
       },
 
       closeApiModal() {
