@@ -285,7 +285,7 @@
                       >
                         <option value="owner">เจ้าของ</option>
                         <option value="admin">ผู้ดูแล</option>
-                        <option value="member">สมาชิก</option>
+                        <option value="User">สมาชิก</option>
                         <option value="bot">Bot</option>
                       </select>
                     </td>
@@ -493,7 +493,7 @@
                       >
                         <option value="owner">เจ้าของ</option>
                         <option value="admin">ผู้ดูแล</option>
-                        <option value="member">สมาชิก</option>
+                        <option value="User">สมาชิก</option>
                         <option value="bot">Bot</option>
                       </select>
                     </td>
@@ -794,10 +794,15 @@ export default {
       // Get user details from store
       const user = this.userStore.getUserById(this.selectedUser);
       if (user) {
-        // Add user to members array with default role
+        // Add user to members array with complete data
         this.currentRoom.members.push({
           empId: user.employeeID,
-          role: user.isBot ? 'bot' : 'member' // Set role based on isBot flag
+          role: user.isBot ? 'bot' : 'User',
+          fullName: user.fullNameThai || user.fullName,
+          department: user.department,
+          profileImage: user.imgUrl,
+          isAdmin: false,
+          position: user.position
         });
 
         // Reset selected user
@@ -995,8 +1000,27 @@ export default {
           return;
         }
 
+        // Log the current room data before update
+        console.log('Updating room with data:', {
+          roomId: this.editingRoomId,
+          members: this.currentRoom.members.map(m => ({
+            empId: m.empId,
+            role: m.role,
+            fullName: m.fullName
+          }))
+        });
+
+        // Create a deep copy of the room data to ensure reactivity
+        const roomDataToUpdate = {
+          ...this.currentRoom,
+          members: this.currentRoom.members.map(member => ({
+            ...member,
+            role: member.role // Ensure role is explicitly included
+          }))
+        };
+
         // Call API to update room
-        const response = await this.chatStore.updateRoom(this.editingRoomId, this.currentRoom);
+        const response = await this.chatStore.updateRoom(this.editingRoomId, roomDataToUpdate);
 
         // Close modal and refresh room list
         this.closeEditModal();
@@ -1075,8 +1099,10 @@ export default {
     },
     getUserName(empId) {
       // ตรวจสอบจาก currentRoom.members ก่อน
+      console.log('currentRoom.members::', this.currentRoom.members);
       const member = this.currentRoom.members?.find(m => m.empId === empId);
       if (member) {
+        console.log('member::', member);
         return member.fullName;
       }
 
