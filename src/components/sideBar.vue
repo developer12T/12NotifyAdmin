@@ -73,13 +73,13 @@ button:hover .icon {
              <img src="/logo-onetwo.png" alt="logo" class="w-auto h-10">
               <span
                   class="self-center text-sm font-semibold whitespace-nowrap dark:text-white"
-              >ระบบจัดการ 12Notification</span
+              >ระบบจัดการ 12Chat</span
               >
             </a>
           </div>
 
         </div>
-        <div class="flex items-center">
+        <!-- <div class="flex items-center">
           <div class="flex items-center ml-3">
             <div>
               <button
@@ -99,7 +99,6 @@ button:hover .icon {
                 <span
                     class="block text-sm text-gray-900 dark:text-white text-center"
                 >
-                <!-- <div v-if="user">{{ user.fullname }}</div> -->
               </span >
                 <span
                     class="block text-sm text-gray-500 truncate dark:text-gray-400 text-center"
@@ -118,7 +117,7 @@ button:hover .icon {
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </nav>
@@ -127,7 +126,7 @@ button:hover .icon {
   <aside id="default-sidebar"
          aria-label="Sidebar"
          class="fixed top-0 left-0 z-40 w-20 h-screen transition-transform -translate-x-full sm:translate-x-0">
-    <div class="h-full px-3 py-3 overflow-y-auto bg-gray-100 dark:bg-gray-800">
+    <div class="h-full px-3 py-3 overflow-y-auto bg-gray-100 dark:bg-gray-800 ">
       <ul class="space-y-2 font-medium">
         <li>
           <div class="text-center align-middle">
@@ -145,7 +144,7 @@ button:hover .icon {
         </li>
         <li class="mt-2">
           <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'dashboard',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'dashboard',
@@ -160,9 +159,8 @@ button:hover .icon {
 
         <!--   test     -->
         <li>
-
           <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'announcement',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'announcement',
@@ -174,7 +172,7 @@ button:hover .icon {
           <Icon class="icon" icon="mdi:bell-notification" width="24" height="24" />
             <span style="font-size: 10px">ประกาศ</span></router-link>
           <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'chatGroup',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'chatGroup',
@@ -187,7 +185,7 @@ button:hover .icon {
             <span style="font-size: 10px">กลุ่ม</span></router-link>
 
             <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'employee',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'employee',
@@ -200,7 +198,7 @@ button:hover .icon {
             <span style="font-size: 10px">พนักงาน</span></router-link>
 
           <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'develop',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'develop',
@@ -213,7 +211,7 @@ button:hover .icon {
             <span style="font-size: 10px">develop</span></router-link>
 
             <router-link :class="{
-                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'profile',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'profile',
@@ -225,6 +223,20 @@ button:hover .icon {
               <Icon class="icon" icon="ph:user-list-fill" width="24" height="24" />
 <!--          <Icon class="icon" icon="ph:code-fill" width="24" height="24" />-->
             <span style="font-size: 10px">โปรไฟล์</span></router-link>
+
+            <router-link :class="{
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName === 'logout',
+                'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName !== 'logout',
+              }"
+                       aria-current="page"
+                       to="/logout"
+                       @click="handlePage('logout')"
+          >
+              <Icon class="icon" icon="basil:logout-solid" style="color: red" width="24" height="24" />
+<!--          <Icon class="icon" icon="ph:code-fill" width="24" height="24" />-->
+            <span style="font-size: 10px;color: red">logout</span></router-link>
         </li>
       </ul>
     </div>
@@ -254,7 +266,7 @@ button:hover .icon {
       <ul class="space-y-2 font-medium">
         <li>
           <router-link   :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'dashboard',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'dashboard',
@@ -270,7 +282,7 @@ button:hover .icon {
         <!--        test -->
         <li>
           <router-link :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'announcement',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'announcement',
@@ -282,7 +294,7 @@ button:hover .icon {
           <Icon class="icon-right" icon="mdi:bell-notification" width="24" height="24" />
             <span class="ml-3 icon-right">ประกาศ-ส่งแจ้งเตือน</span></router-link>
           <router-link :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'chatGroup',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'chatGroup',
@@ -295,7 +307,7 @@ button:hover .icon {
             <span class="ml-3 icon-right">กลุ่ม-ห้องแชท</span></router-link>
 
             <router-link :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'employee',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'employee',
@@ -308,7 +320,7 @@ button:hover .icon {
             <span class="ml-3 icon-right">ข้อมูลพนักงาน</span></router-link>
 
           <router-link :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'develop',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'develop',
@@ -320,24 +332,59 @@ button:hover .icon {
           <Icon class="icon-right" icon="ph:code-fill" width="24" height="24" />
             <span class="ml-3 icon-right">developer-mode</span></router-link>
 
-          <router-link :class="{
-                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName === 'profile',
-                'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName !== 'profile',
-              }"
-                       aria-current="page"
-                       to="/profile"
-                       @click="handlePage('profile')"
-          >
-          <Icon class="icon-right" icon="ph:user-list-fill" width="24" height="24" />
-            <span class="ml-3 icon-right">ข้อมูลส่วนตัว</span></router-link>
+            <router-link :class="{
+                  'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                    pageName === 'profile',
+                  'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                    pageName !== 'profile',
+                }"
+                        aria-current="page"
+                        to="/profile"
+                        @click="handlePage('profile')"
+            >
+            <Icon class="icon-right" icon="ph:user-list-fill" width="24" height="24" />
+              <span class="ml-3 icon-right">ข้อมูลส่วนตัว</span></router-link>
 
+              <router-link :class="{
+                    'flex items-center p-2  group text-[#00569D] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                    pageName === 'logout',
+                  'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                    pageName !== 'logout',
+                }"
+                        aria-current="page"
+                        to="/logout"
+                        @click="handlePage('logout')"
+          >
+          <Icon class="icon-right" icon="basil:logout-solid" style="color: red" width="24" height="24" />
+            <span class="ml-3 icon-right" style="color: red">ออกจากระบบ</span></router-link>
         </li>
 
       </ul>
     </div>
   </div>
+
+<footer :class="[
+  'fixed bottom-0 bg-none dark:bg-gray-800 z-30 ml-2 transition-all duration-300',
+  // 'fixed bottom-0 bg-[#F3F4F6] rounded-lg shadow-sm dark:bg-gray-800 z-30 ml-2 transition-all duration-300',
+  activesTab === 'open' ? 'left-64 right-4' : 'left-20 right-4'
+]">
+    <div class="w-full mx-auto p-4">
+   
+        <div class="flex items-center justify-start space-x-2">
+              <img src="/logo-fplus.png" alt="logo" class="h-4 object-contain" />
+              <span class="text-xs text-gray-500 dark:text-gray-400">
+                Copyright One Two Trading Co., Ltd. All rights reserved.
+              </span>
+            </div>
+    </div>
+</footer>
+
+<!-- Add padding to main content to prevent footer overlap -->
+<div :class="[
+  'transition-all duration-300',
+  activesTab === 'open' ? 'ml-64' : 'ml-20'
+]">
+</div>
 
   <!-- Add overlay div -->
   <div 

@@ -55,7 +55,7 @@
           <div class="flex flex-col md:col-span-2">
             <p class="text-sm text-gray-500">อีเมล</p>
             <p class="font-medium">
-              <a :href="`mailto:${userData.mail}`" class="text-blue-500 hover:underline">
+              <a :href="`mailto:${userData.mail}`" class="text-[#00569D] hover:underline">
                 {{ userData.mail }}
               </a>
             </p>

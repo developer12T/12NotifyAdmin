@@ -122,12 +122,12 @@
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
               กิจกรรมล่าสุด
             </h5>
-            <router-link to="/announcement" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            <router-link to="/announcement" @click="handlePage('announcement')" class="text-sm font-medium text-[#00569D] hover:underline dark:text-blue-500">
               ดูทั้งหมด
             </router-link>
           </div>
-          <div class="flow-root">
-            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          <div class="flow-root h-[20vh] overflow-y-auto">
+            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700 ">
               <li v-for="(activity, index) in recentActivities" :key="index" class="py-3 sm:py-4">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
@@ -177,6 +177,7 @@ export default {
       userCount: 0,
       userStats: { active: 0, inactive: 0 },
       recentActivities: [],
+      pageName: 'announcement',
     }
   },
   computed: {

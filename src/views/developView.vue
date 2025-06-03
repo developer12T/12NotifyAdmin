@@ -17,10 +17,7 @@
                       d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>
                 </div>
-                <input
-                  type="search"
-                  id="default-search"
-                  v-model="searchQuery"
+                <input type="search" id="default-search" v-model="searchQuery"
                   class="input-equal-height block w-full ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="ค้นหาประกาศ..." />
               </div>
@@ -28,11 +25,14 @@
           </div>
         </div>
 
-        
+
 
         <button @click="openCreateModal"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          <i class="fas fa-plus mr-2"></i>สร้าง Bot Notify
+          class="text-white bg-green-700 hover:bg-green-800 flex items-center gap-2 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+            <path fill="currentColor"
+              d="M14.5 9q.207 0 .41.015q.088-.242.09-.515v-4A1.5 1.5 0 0 0 13.5 3h-3v-.5A.48.48 0 0 0 10 2c-.276 0-.5.23-.5.5V3h-3A1.5 1.5 0 0 0 5 4.5v4A1.5 1.5 0 0 0 6.5 10h4.837c.895-.63 1.986-1 3.163-1M7 6.5a1 1 0 1 1 2 0a1 1 0 0 1-2 0m4 0a1 1 0 1 1 2 0a1 1 0 0 1-2 0m-2 8c0-1.105.326-2.135.887-2.997H5.31a1.81 1.81 0 0 0-1.809 1.81v.689h.005c.034.78.248 1.757 1.123 2.555C5.584 17.43 7.234 18 10 18q.13 0 .256-.002A5.48 5.48 0 0 1 9 14.5m10 0a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-4-2a.5.5 0 0 0-1 0V14h-1.5a.5.5 0 0 0 0 1H14v1.5a.5.5 0 0 0 1 0V15h1.5a.5.5 0 0 0 0-1H15z" />
+          </svg>สร้าง Bot Notify
         </button>
       </div>
 
@@ -52,9 +52,9 @@
       </div>
 
       <!-- Rooms List -->
-      <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div v-else class="relative overflow-x-auto overflow-y-auto h-[70vh] shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase sticky top-0 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-2 py-3 text-center">ลำดับ</th>
               <th scope="col" class="px-2 py-3 text-center">รหัส</th>
@@ -107,7 +107,7 @@
                   </button>
 
                   <button @click="openEditModal(bot)"
-                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                    class="text-[#00569D] hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                     <Icon icon="mdi:pencil" width="24" height="24" />
                   </button>
 
@@ -135,12 +135,18 @@
             </button>
           </div>
           <form @submit.prevent="isEditing ? updateRoom() : createRoom()">
-            <div class="mb-4">
+            <div>
+              <div>
+                   <div class="mb-4">
               <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ชื่อ Bot</label>
               <input type="text" id="name" v-model="currentRoom.name" required
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="กรอกชื่อ bot">
             </div>
+              </div>
+              <div></div>
+            </div>
+         
             <div class="mb-4">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">รายการห้อง</label>
               <div class="relative">
@@ -197,7 +203,7 @@
                 ยกเลิก
               </button>
               <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
                 {{ isEditing ? 'บันทึก' : 'สร้าง' }}
               </button>
             </div>

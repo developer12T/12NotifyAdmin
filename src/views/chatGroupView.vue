@@ -6,10 +6,8 @@
         <div class="flex items-start justify-between gap-2">
           <h1 class="text-xl font-bold text-gray-900 dark:text-white">จัดการกลุ่มแชท</h1>
           <!-- Sorting -->
-          <select
-            v-model="sortBy"
-            class="input-equal-height bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
+          <select v-model="sortBy"
+            class="input-equal-height bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option value="newest">ใหม่ล่าสุด</option>
             <option value="oldest">เก่าสุด</option>
             <option value="name">ตามชื่อกลุ่ม</option>
@@ -27,13 +25,9 @@
                       d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>
                 </div>
-                <input
-                  type="search"
-                  id="default-search"
-                  v-model="searchQuery"
+                <input type="search" id="default-search" v-model="searchQuery"
                   class="input-equal-height block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="ค้นหาประกาศ..."
-                />
+                  placeholder="ค้นหาประกาศ..." />
               </div>
             </form>
           </div>
@@ -42,8 +36,11 @@
 
 
         <button @click="openCreateModal"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          <i class="fas fa-plus mr-2"></i>สร้างกลุ่มใหม่
+          class="text-white bg-green-700 hover:bg-green-800 flex items-center gap-2 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M21 6h-2v6.1c1.2.2 2.2.7 3 1.4V7c0-.5-.5-1-1-1M6 17c0 .5.5 1 1 1h5c0-1.1.3-2.1.8-3H6zM16 2H3c-.5 0-1 .5-1 1v14l4-4h8.7c.7-.5 1.5-.8 2.3-.9V3c0-.5-.5-1-1-1m1 12h2v3h3v2h-3v3h-2v-3h-3v-2h3z" />
+          </svg>สร้างกลุ่มใหม่
         </button>
       </div>
 
@@ -63,9 +60,9 @@
       </div>
 
       <!-- Rooms List -->
-      <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div v-else class="relative overflow-x-auto overflow-y-auto h-[70vh] shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">ชื่อกลุ่ม</th>
               <th scope="col" class="px-6 py-3">คำอธิบาย</th>
@@ -121,7 +118,7 @@
               <td class="px-6 py-4">
                 <div class="flex gap-2">
                   <button @click="openEditModal(room)"
-                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                    class="text-[#00569D] hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                     <Icon icon="mdi:pencil" width="24" height="24" />
                   </button>
                   <button @click="confirmDelete(room)"
@@ -137,7 +134,8 @@
 
       <!-- Create Room Modal -->
       <div v-if="showCreateModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div
+          class="relative max-w-4xl max-h-full top-20 mx-auto p-5 border shadow-lg rounded-md bg-white dark:bg-gray-800">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white">
               สร้างกลุ่มใหม่
@@ -148,153 +146,161 @@
             </button>
           </div>
           <form @submit.prevent="createRoom()">
-            <div class="mb-4">
-              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ชื่อกลุ่ม</label>
-              <input type="text" id="name" v-model="currentRoom.name" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="กรอกชื่อกลุ่ม">
-            </div>
-            <div class="mb-4">
-              <label for="description"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">คำอธิบาย</label>
-              <textarea id="description" v-model="currentRoom.description" required rows="4"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="กรอกคำอธิบายกลุ่ม"></textarea>
-            </div>
-            <div class="mb-4">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                for="small_size">รูปภาพกลุ่ม</label>
-              <input
-                class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                @change="onRoomImageChange" accept="image/*" id="small_size" type="file">
-            </div>
-            <div class="mb-4">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">สีกลุ่ม</label>
-              <div class="flex flex-wrap gap-2">
-                <div v-for="color in colorOptions" :key="color" :style="{ backgroundColor: color }"
-                  class="w-8 h-8 rounded-full cursor-pointer border-2 transition"
-                  :class="currentRoom.color === color ? 'border-blue ring-2 ring-blue' : 'border-gray-300'"
-                  @click="currentRoom.color = color"></div>
-              </div>
-            </div>
-            <div class="mb-4">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ผู้ใช้งาน</label>
-              <div class="flex flex-wrap gap-2 relative">
-                <!-- Custom dropdown with images -->
-                <div
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
-                  @click="showUserDropdown = !showUserDropdown">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                      <img v-if="selectedUser && userStore.getUserById(selectedUser)?.imgUrl"
-                        :src="userStore.getUserById(selectedUser)?.imgUrl" class="w-6 h-6 rounded-full object-cover"
-                        alt="User profile" />
-                      <span v-if="selectedUser">
-                        {{ userStore.getUserById(selectedUser)?.fullNameThai || 'ไม่พบข้อมูล' }} ({{ selectedUser }})
-                      </span>
-                      <span v-else>เลือกผู้ใช้งาน</span>
-                    </div>
-                    <Icon icon="mdi:chevron-down" width="20" height="20" />
-                  </div>
+            <div class="flex flex-row justify-between gap-4">
+              <div class="w-1/3">
+                <div class="mb-4">
+                  <label for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ชื่อกลุ่ม</label>
+                  <input type="text" id="name" v-model="currentRoom.name" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="กรอกชื่อกลุ่ม">
                 </div>
-
-                <!-- Dropdown options -->
-                <div v-if="showUserDropdown"
-                  class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto dark:bg-gray-700 dark:border-gray-600">
-                  <!-- Search input -->
-                  <div class="sticky top-0 p-2 bg-white dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <div class="relative">
-                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <Icon icon="mdi:magnify" class="text-gray-500 dark:text-gray-400" width="20" height="20" />
-                      </div>
-                      <input type="text" v-model="userSearchQuery"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ค้นหาผู้ใช้..." @click.stop />
-                    </div>
-                  </div>
-
-                  <div v-for="user in filteredActiveUsers" :key="user.employeeID" @click="selectUser(user.employeeID)"
-                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center gap-2">
-                    <img :src="user.imgUrl" class="w-8 h-8 rounded-full object-cover" alt="User profile"
-                      @error="handleImageError" />
-                    <div>
-                      <div class="text-gray-900 dark:text-white">
-                        {{ user.fullNameThai }}
-                        <span class="text-gray-500 text-xs" v-if="user.positon">{{ user.positon }} <span
-                            class="text-gray-500">: {{ user.department }}</span></span>
-                      </div>
-                      <div class="text-gray-500 dark:text-gray-400 text-xs">{{ user.employeeID }}</div>
-                    </div>
+                <div class="mb-4">
+                  <label for="description"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">คำอธิบาย</label>
+                  <textarea id="description" v-model="currentRoom.description" required rows="4"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="กรอกคำอธิบายกลุ่ม"></textarea>
+                </div>
+                <div class="mb-4">
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    for="small_size">รูปภาพกลุ่ม</label>
+                  <input
+                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    @change="onRoomImageChange" accept="image/*" id="small_size" type="file">
+                </div>
+                <div class="mb-4">
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">สีกลุ่ม</label>
+                  <div class="flex flex-wrap gap-2">
+                    <div v-for="color in colorOptions" :key="color" :style="{ backgroundColor: color }"
+                      class="w-8 h-8 rounded-full cursor-pointer border-2 transition"
+                      :class="currentRoom.color === color ? 'border-blue ring-2 ring-blue' : 'border-gray-300'"
+                      @click="currentRoom.color = color"></div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="mb-4">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ผู้ใช้ที่เลือก</label>
-              <div class="relative overflow-x-auto overflow-y-auto h-[250px]">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" class="px-6 py-3">
-                        ชื่อผู้ใช้
-                      </th>
-                      <!--                    <th scope="col" class="px-6 py-3">-->
-                      <!--                      รหัสพนักงาน-->
-                      <!--                    </th>-->
-                      <th scope="col" class="px-6 py-3">
-                        สิทธิ์
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="member in currentRoom.members" :key="member.empId"
-                      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="w-2/3">
+                <div class="mb-4">
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ผู้ใช้งาน</label>
+                  <div class="flex flex-wrap gap-2 relative">
+                    <!-- Custom dropdown with images -->
+                    <div
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+                      @click="showUserDropdown = !showUserDropdown">
+                      <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                          <img :src="getUserImage(member.empId)" class="w-8 h-8 rounded-full object-cover"
-                            alt="User profile" @error="handleImageError" />
-                          <div class="flex items-center gap-2">
-                            <span>{{ getUserName(member.empId) }}</span>
-                            <span v-if="member.role === 'bot'"
-                              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
-                              <Icon icon="mdi:robot" class="mr-1" width="16" height="16" />
-                              Bot
-                            </span>
-                          </div>
+                          <img v-if="selectedUser && userStore.getUserById(selectedUser)?.imgUrl"
+                            :src="userStore.getUserById(selectedUser)?.imgUrl" class="w-6 h-6 rounded-full object-cover"
+                            alt="User profile" />
+                          <span v-if="selectedUser">
+                            {{ userStore.getUserById(selectedUser)?.fullNameThai || 'ไม่พบข้อมูล' }} ({{ selectedUser
+                            }})
+                          </span>
+                          <span v-else>เลือกผู้ใช้งาน</span>
                         </div>
-                      </th>
-                      <!--                    <td class="px-6 py-4">-->
-                      <!--                      {{ member.empId }}-->
-                      <!--                    </td>-->
-                      <td class="px-6 py-4">
-                        <select v-model="member.role" :disabled="member.role === 'bot'"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          :class="{ 'opacity-50 cursor-not-allowed': member.role === 'bot' }">
-                          <option value="owner">เจ้าของ</option>
-                          <option value="admin">ผู้ดูแล</option>
-                          <option value="User">สมาชิก</option>
-                          <option value="bot">Bot</option>
-                        </select>
-                      </td>
-                      <td class="px-6 py-4">
-                        <button v-if="member.role !== 'bot'" @click="removeMember(member.empId)"
-                          class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
-                          <Icon icon="mdi:delete" width="24" height="24" />
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="currentRoom.members.length === 0" class="bg-white dark:bg-gray-800">
-                      <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                        ยังไม่มีผู้ใช้ที่เลือก
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                        <Icon icon="mdi:chevron-down" width="20" height="20" />
+                      </div>
+                    </div>
 
+                    <!-- Dropdown options -->
+                    <div v-if="showUserDropdown"
+                      class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto dark:bg-gray-700 dark:border-gray-600">
+                      <!-- Search input -->
+                      <div
+                        class="sticky top-0 p-2 bg-white dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                        <div class="relative">
+                          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <Icon icon="mdi:magnify" class="text-gray-500 dark:text-gray-400" width="20" height="20" />
+                          </div>
+                          <input type="text" v-model="userSearchQuery"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="ค้นหาผู้ใช้..." @click.stop />
+                        </div>
+                      </div>
+
+                      <div v-for="user in filteredActiveUsers" :key="user.employeeID"
+                        @click="selectUser(user.employeeID)"
+                        class="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center gap-2">
+                        <img :src="user.imgUrl" class="w-8 h-8 rounded-full object-cover" alt="User profile"
+                          @error="handleImageError" />
+                        <div>
+                          <div class="text-gray-900 dark:text-white">
+                            {{ user.fullNameThai }}
+                            <span class="text-gray-500 text-xs" v-if="user.positon">{{ user.positon }} <span
+                                class="text-gray-500">: {{ user.department }}</span></span>
+                          </div>
+                          <div class="text-gray-500 dark:text-gray-400 text-xs">{{ user.employeeID }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ผู้ใช้ที่เลือก</label>
+                  <div class="relative overflow-x-auto overflow-y-auto h-[250px]">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <thead
+                        class="text-xs text-gray-700 sticky top-0 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                          <th scope="col" class="px-6 py-3">
+                            ชื่อผู้ใช้
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                            สิทธิ์
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="member in currentRoom.members" :key="member.empId"
+                          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <div class="flex items-center gap-2">
+                              <img :src="getUserImage(member.empId)" class="w-8 h-8 rounded-full object-cover"
+                                alt="User profile" @error="handleImageError" />
+                              <div class="flex items-center gap-2">
+                                <span>{{ getUserName(member.empId) }}</span>
+                                <span v-if="member.role === 'bot'"
+                                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                  <Icon icon="mdi:robot" class="mr-1" width="16" height="16" />
+                                  Bot
+                                </span>
+                              </div>
+                            </div>
+                          </th>
+                          <!--                    <td class="px-6 py-4">-->
+                          <!--                      {{ member.empId }}-->
+                          <!--                    </td>-->
+                          <td class="px-6 py-4">
+                            <select v-model="member.role" :disabled="member.role === 'bot'"
+                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              :class="{ 'opacity-50 cursor-not-allowed': member.role === 'bot' }">
+                              <option value="owner">เจ้าของ</option>
+                              <option value="admin">ผู้ดูแล</option>
+                              <option value="User">สมาชิก</option>
+                              <option value="bot">Bot</option>
+                            </select>
+                          </td>
+                          <td class="px-6 py-4">
+                            <button v-if="member.role !== 'bot'" @click="removeMember(member.empId)"
+                              class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                              <Icon icon="mdi:delete" width="24" height="24" />
+                            </button>
+                          </td>
+                        </tr>
+                        <tr v-if="currentRoom.members.length === 0" class="bg-white dark:bg-gray-800">
+                          <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                            ยังไม่มีผู้ใช้ที่เลือก
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
             </div>
 
             <div class="flex justify-end space-x-2">
@@ -303,7 +309,7 @@
                 ยกเลิก
               </button>
               <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
                 สร้าง
               </button>
             </div>
@@ -1124,7 +1130,8 @@ export default {
 
 <style>
 .input-equal-height {
-  height: 38px; /* หรือใช้ min-height: 42px; */
+  height: 38px;
+  /* หรือใช้ min-height: 42px; */
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: 1rem;

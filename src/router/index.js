@@ -1,22 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores';
-import notificationRoutes from './notification.router'
-
 
 const routes = [
   { path: '/', name: 'Login', component: () => import('../authentication/login.vue'), props: true },
-  { ...notificationRoutes },
+  {
+    path: '/12chat-manage',
+    redirect: '/dashboard',
+    children: [
+      { path: '/dashboard', component: () => import('../views/dashboardView.vue') },
+      { path: '/announcement', component: () => import('../views/announcementView.vue') },
+      { path: '/develop', component: () => import('../views/developView.vue') },
+      { path: '/chatGroup', component: () => import('../views/chatGroupView.vue') },
+      { path: '/profile', component: () => import('../views/profileView.vue') },
+      { path: '/employee', component: () => import('../views/employeeView.vue') },
+    ]
+  },
   {
     path: '/logout',
     name: 'Logout',
-    beforeEnter: (to, from, next) => {
-        const authStore = useAuthStore();
-        authStore.logout();
-        // next({ name: '/login' });
-        window.location.href = "/12chat-manage/";
-      },
+    beforeEnter: async (to, from, next) => {
+      const authStore = useAuthStore();
+      await authStore.logout();
+      next('/');
+    },
   },
-  { path: '/:pathMatch(.*)*', redirect: '/' } 
+  { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
 
 const router = createRouter({
@@ -29,10 +37,10 @@ router.beforeEach(async (to) => {
     const authRequired = !publicPages.includes(to.path);
     const authStore = useAuthStore();
 
-    // if (authRequired && !authStore.user) {
-    //     authStore.returnUrl = to.fullPath;
-    //     return '/';
-    // }
+    if (authRequired && !authStore.isLoggedIn) {
+        authStore.returnUrl = to.fullPath;
+        return '/';
+    }
 });
 
 export default router;
