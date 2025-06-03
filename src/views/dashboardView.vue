@@ -14,7 +14,7 @@
     <div v-else class="p-4 mt-14">
       <div class="max-w-5xl">
         <h1 class="text-2xl font-bold">สวัสดี, Hello</h1>
-        <p class="py-6">ยินดีต้อนรับเข้าสู่ระบบจัดการ 12Notification</p>
+        <p class="py-6">ยินดีต้อนรับเข้าสู่ระบบจัดการ 12Chat</p>
 
         <!-- Summary Cards Section -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -36,8 +36,18 @@
               </div>
               <div class="flex-1">
                 <h3 class="text-3xl font-bold">{{ userCount }}</h3>
+                <div class="flex gap-3 mt-2">
+                  <span class="flex items-center gap-1">
+                    <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ userStats.active }}</span>
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <span class="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ userStats.inactive }}</span>
+                  </span>
+                </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  จากทั้งหมด {{ totalUsers }} คน
+                  พนักงานทั้งหมด
                 </p>
               </div>
             </div>
@@ -61,7 +71,7 @@
                 </svg>
               </div>
               <div class="flex-1">
-                <h3 class="text-3xl font-bold">{{ chatGroupCount }}</h3>
+                <h3 class="text-3xl font-bold">{{ dashboardSummary.chatGroupCount }}</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
                   กลุ่มที่ใช้งานอยู่
                 </p>
@@ -86,13 +96,24 @@
                 </svg>
               </div>
               <div class="flex-1">
-                <h3 class="text-3xl font-bold">{{ announcementCount }}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <h3 class="text-3xl font-bold">{{ announcementStats.total }}</h3>
+                <div class="flex gap-3 mt-2">
+                  <span class="flex items-center gap-1">
+                    <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ announcementStats.active }}</span>
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <span class="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ announcementStats.inactive }}</span>
+                  </span>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
                   ประกาศในระบบ
                 </p>
               </div>
             </div>
           </div>
+
         </div>
 
         <!-- Recent Activity Section -->
@@ -101,17 +122,17 @@
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
               กิจกรรมล่าสุด
             </h5>
-            <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            <router-link to="/announcement" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
               ดูทั้งหมด
-            </a>
+            </router-link>
           </div>
           <div class="flow-root">
             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
               <li v-for="(activity, index) in recentActivities" :key="index" class="py-3 sm:py-4">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="getActivityIconClass(activity.type)">
-                      <component :is="getActivityIcon(activity.type)" class="w-4 h-4" />
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="getActivityIconClass(activity.type)"> 
+                        <img :src="activity.imageUrl" class="w-8 h-8 object-cover rounded-full" alt="ประกาศ" />
                     </div>
                   </div>
                   <div class="flex-1 min-w-0 ms-4">
@@ -123,7 +144,7 @@
                     </p>
                   </div>
                   <div class="inline-flex items-center text-xs font-semibold text-gray-900 dark:text-white">
-                    {{ activity.time }}
+                    {{ formatTimeAgo(activity.time) }}
                   </div>
                 </div>
               </li>
@@ -136,63 +157,88 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { formatDistanceToNow } from 'date-fns'
 import { th } from 'date-fns/locale'
+import { useDashboardStore } from '@/stores/modules/dashboard.js'
+import { useGetAnnouncement } from '@/stores/modules/announcement.js'
+import axios from 'axios'
 
 export default {
   name: 'Dashboard',
+  setup() {
+    const dashboardStore = useDashboardStore()
+    return { dashboardStore }
+  },
   data() {
     return {
+      announcements: [],
+      announcementStats: { active: 0, inactive: 0, total: 0 },
+      getAnnouncement: useGetAnnouncement(),
       userCount: 0,
-      totalUsers: 0,
-      chatGroupCount: 0,
-      announcementCount: 0,
+      userStats: { active: 0, inactive: 0 },
       recentActivities: [],
-      loading: true,
-      error: null
+    }
+  },
+  computed: {
+    dashboardSummary() {
+      return this.dashboardStore.getDashboardSummary
+    },
+    loading() {
+      return this.dashboardStore.isLoading
+    },
+    error() {
+      return this.dashboardStore.getError
     }
   },
   async created() {
     try {
-      await this.fetchDashboardData()
+      await this.dashboardStore.fetchDashboardData()
+      await this.fetchAnnouncementStats()
+      await this.fetchUserCount()
+      await this.fetchRecentAnnouncements()
     } catch (error) {
-      this.error = 'เกิดข้อผิดพลาดในการโหลดข้อมูล'
       console.error('Error fetching dashboard data:', error)
-    } finally {
-      this.loading = false
     }
   },
   methods: {
-    async fetchDashboardData() {
+    async fetchUserCount() {
       try {
-        const response = await axios.get('http://localhost:3000/api/rooms/summary')
-        const data = response.data
-
-        // Update dashboard counts
-        this.userCount = data.users.total
-        this.totalUsers = data.users.max
-        this.chatGroupCount = data.groups.total
-        this.announcementCount = data.announcements.total
-
-        // Transform and format recent activities
-        this.recentActivities = data.recent_activities.map(activity => ({
-          type: this.mapActivityType(activity.type),
-          title: activity.title,
-          description: activity.description,
-          time: this.formatTimeAgo(activity.time_ago)
-        }))
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users`)
+        this.userCount = response.data.count || 0
+        const users = response.data.data || []
+        this.userStats.active = users.filter(u => u.status === 1).length
+        this.userStats.inactive = users.filter(u => u.status === 0).length
       } catch (error) {
-        throw error
+        console.error('Error fetching user count:', error)
       }
     },
-    mapActivityType(type) {
-      const typeMap = {
-        'announcement': 'announcement',
-        'user_register': 'user',
-        'chat': 'chat'
+    async fetchAnnouncementStats() {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/announcements/web`)
+        const announcements = response.data.announcements || []
+        this.announcementStats.active = announcements.filter(a => a.status === 'active').length
+        this.announcementStats.inactive = announcements.filter(a => a.status === 'inactive').length
+        this.announcementStats.total = response.data.pagination?.totalAnnouncements || announcements.length
+      } catch (e) {
+        this.announcementStats = { active: 0, inactive: 0, total: 0 }
       }
-      return typeMap[type] || 'default'
+    },
+    async fetchRecentAnnouncements() {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/announcements/web`)
+        const announcements = response.data.announcements || []
+        this.recentActivities = announcements
+          .filter(a => a.status === 'active')
+          .slice(0, 5)
+          .map(a => ({
+            title: a.title,
+            description: a.content,
+            imageUrl: a.imageUrl ? (import.meta.env.VITE_API_BASE_URL + a.imageUrl) : null,
+            time: a.createdAt
+          }))
+      } catch (e) {
+        this.recentActivities = []
+      }
     },
     formatTimeAgo(dateString) {
       try {

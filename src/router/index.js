@@ -13,7 +13,7 @@ const routes = [
         const authStore = useAuthStore();
         authStore.logout();
         // next({ name: '/login' });
-        window.location.href = "http://localhost:5173/";
+        window.location.href = "/12chat-manage/";
       },
   },
   { path: '/:pathMatch(.*)*', redirect: '/' } 

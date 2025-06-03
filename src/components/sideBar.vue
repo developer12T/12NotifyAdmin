@@ -296,13 +296,13 @@ button:hover .icon {
 
             <router-link :class="{
                 'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName === 'chatGroup',
+                  pageName === 'employee',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName !== 'chatGroup',
+                  pageName !== 'employee',
               }"
                        aria-current="page"
-                       to="/chatGroup"
-                       @click="handlePage('chatGroup')"
+                       to="/employee"
+                       @click="handlePage('employee')"
           >
           <Icon class="icon-right"  icon="clarity:employee-group-solid" width="24" height="24"/>
             <span class="ml-3 icon-right">ข้อมูลพนักงาน</span></router-link>

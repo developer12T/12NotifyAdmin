@@ -23,25 +23,13 @@ export const useChatStore = defineStore("ChatData", {
                 console.log(error);
             }
         },
-        async createChat(rawData) {
+        async createChat(formData) {
             try {
-                // แยก admin ออกจาก members
-                const admin = rawData.members.find(member => member.role === 'admin');
-                const members = rawData.members.filter(member => member.role !== 'admin');
-
-                const formData = {
-                    name: rawData.name,
-                    description: rawData.description,
-                    color: rawData.color,
-                    imageUrl: '',
-                    admin: admin || null, // ถ้าไม่มี admin จะเป็น null
-                    members: members
-                };
-                const response = await api.post("/api/rooms", formData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                let config = {};
+                if (formData instanceof FormData) {
+                    config.headers = { 'Content-Type': 'multipart/form-data' };
+                }
+                const response = await api.post("/api/rooms", formData, config);
                 return response.data;
             } catch (error) {
                 console.error("Error creating chat:", error);
@@ -69,42 +57,35 @@ export const useChatStore = defineStore("ChatData", {
             }
         },
 
-        async updateRoom(roomId, rawData) {
+        async updateRoom(roomId, formData) {
             try {
                 // Check if roomId is valid
                 if (!roomId || roomId === 'undefined') {
                     throw new Error('Invalid room ID for update: ' + roomId);
                 }
 
-                console.log(rawData)
-                // แยก admin ออกจาก members
-                const admin = rawData.members.find(member => member.role === 'admin');
-                const members = rawData.members.filter(member => member.role !== 'admin');
-
-                const formData = {
-                    name: rawData.name,
-                    description: rawData.description,
-                    color: rawData.color,
-                    imageUrl: rawData.imageUrl || '',
-                    admin: admin || null, // ถ้าไม่มี admin จะเป็น null
-                    members: members
+                console.log('Updating room with FormData:', formData);
+                
+                // Set proper headers for multipart/form-data
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 };
 
-                const response = await api.put(`/api/rooms/${roomId}`, formData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const response = await api.put(`/api/rooms/${roomId}`, formData, config);
                 return response.data;
             } catch (error) {
                 console.error("Error updating room:", error);
+                if (error.response) {
+                    console.error("Error response data:", error.response.data);
+                }
                 throw error;
             }
         },
 
         async deleteRoom(roomId,employeeId) {
             try {
-
                 const response = await api.delete(`/api/rooms/${roomId}`, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -114,6 +95,35 @@ export const useChatStore = defineStore("ChatData", {
                 return response.data;
             } catch (error) {
                 console.error("Error updating room:", error);
+                throw error;
+            }
+        },
+
+        async sendTestMessage(roomId, message, employeeId, isAdminNotification = true, replyToId = '') {
+            try {
+                const payload = {
+                    roomId: [roomId],
+                    message: [message],
+                    employeeId: employeeId,
+                    isAdminNotification: isAdminNotification,
+                    replyToId: replyToId
+                };
+
+                console.log('Sending test message with payload:', payload);
+
+                const response = await api.post('/api/messages/send', payload, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Test message response:', response.data);
+                return response.data;
+            } catch (error) {
+                console.error("Error sending test message:", error);
+                if (error.response) {
+                    console.error("Error response data:", error.response.data);
+                }
                 throw error;
             }
         }
