@@ -102,7 +102,7 @@ export const useChatStore = defineStore("ChatData", {
         async sendTestMessage(roomId, message, employeeId, isAdminNotification = true, replyToId = '') {
             try {
                 const payload = {
-                    roomId: [roomId],
+                    roomId: roomId,
                     message: [message],
                     employeeId: employeeId,
                     isAdminNotification: isAdminNotification,
